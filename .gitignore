@@ -8,7 +8,7 @@ dist/
 
 # demo recording
 demo.tape
-demo.gif
+demo_setup.sh
 
 # editor
 .DS_Store

@@ -2,6 +2,8 @@
 
 **The dashboard for `.env` files you've lost track of — with built-in leak detection.**
 
+![demo](assets/demo.gif)
+
 Every developer has 20 `.env` files scattered across projects, zero idea what's in them,
 and a recurring fear they committed one to git. `envs` gives you a port-whisperer-style
 table of every project, every key, and every leak — in one local, dependency-free CLI.
