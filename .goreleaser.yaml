@@ -65,6 +65,7 @@ release:
 
 brews:
   - name: dotenv-doctor
+    directory: Formula
     repository:
       owner: zigamedved
       name: homebrew-tap
