@@ -1,0 +1,16 @@
+# compiled binary
+envs
+dist/
+
+# test binaries
+*.test
+*.out
+
+# demo recording
+demo.tape
+demo.gif
+
+# editor
+.DS_Store
+.idea/
+.vscode/

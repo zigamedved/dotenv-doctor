@@ -1,0 +1,77 @@
+version: 2
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: envs
+    main: ./cmd/envs
+    binary: envs
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w -X main.Version={{.Version}}
+
+archives:
+  - id: envs
+    name_template: "dotenv-doctor_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files:
+      - README.md
+      - LICENSE
+
+checksum:
+  name_template: "checksums.txt"
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  sort: asc
+  use: github
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^chore:"
+      - "Merge pull request"
+
+release:
+  github:
+    owner: zigamedved
+    name: dotenv-doctor
+  draft: false
+  prerelease: auto
+  header: |
+    ## envs {{ .Version }}
+
+    The dashboard for `.env` files you've lost track of.
+
+    ### Install
+
+    ```bash
+    brew install zigamedved/tap/dotenv-doctor
+    # or
+    go install github.com/zigamedved/dotenv-doctor/cmd/envs@latest
+    ```
+
+brews:
+  - name: dotenv-doctor
+    repository:
+      owner: zigamedved
+      name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+    homepage: "https://github.com/zigamedved/dotenv-doctor"
+    description: "The dashboard for .env files you've lost track of, with built-in leak detection."
+    install: |
+      bin.install "envs"
+    test: |
+      assert_match "envs version", shell_output("#{bin}/envs --version")
